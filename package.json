@@ -1,14 +1,17 @@
 {
-  "name"         : "FonoTV",
-  "version"      : "0.0.0",
-  "description"  : "Continuos video streaming.",
-  "main"         : "server.js",
-  "author"       : "Sergey Bondarenko",
-  "dependencies" : {
-    "express"         : "",
-    "mongoose"        : "",
-    "morgan"          : "",
-    "body-parser"     : "",
-    "method-override" : ""
+  "name": "FonoTV",
+  "version": "0.0.1",
+  "description": "Continuos video streaming.",
+  "main": "server.js",
+  "author": "Sergey Bondarenko",
+  "dependencies": {
+    "angular": "",
+    "angular-route": "",
+    "body-parser": "",
+    "bootstrap": "",
+    "express": "",
+    "method-override": "",
+    "mongoose": "^4.3.7",
+    "morgan": ""
   }
 }
