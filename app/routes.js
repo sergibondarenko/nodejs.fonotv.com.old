@@ -1,4 +1,5 @@
 var Todo = require('./models/todo');
+var Fonotvdb = require('./models/fonotvdb');
 
 function getTodos(res){
 	Todo.find(function(err, todos) {
@@ -8,6 +9,18 @@ function getTodos(res){
 				res.send(err)
 
 			res.json(todos); // return all todos in JSON format
+			console.log(todos.text);
+		});
+};
+
+function getLinks(res){
+	Fonotvdb.find(function(err, hyperlinks) {
+
+			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
+			if (err)
+				res.send(err)
+
+			res.json(hyperlinks); // return all todos in JSON format
 		});
 };
 
@@ -19,6 +32,11 @@ module.exports = function(app) {
 
 		// use mongoose to get all todos in the database
 		getTodos(res);
+	});
+	app.get('/api/links', function(req, res) {
+
+		// use mongoose to get all todos in the database
+		getLinks(res);
 	});
 
 	// create todo and send back all todos after creation
