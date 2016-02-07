@@ -16,5 +16,4 @@ var db_schema = new Schema({
 	audio_med_res: String
 }, {collection: 'hyperlinks'});
 
-module.exports = mongoose.model('Fonotvdb', db_schema);
-//module.exports = mongoose.model('Todo', db_schema);
+module.exports = mongoose.model('Videolink', db_schema);

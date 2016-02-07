@@ -1,5 +1,6 @@
+var path = require('path');
 var Todo = require('./models/todo');
-var Fonotvdb = require('./models/fonotvdb');
+var Videolink = require('./models/fonotvdb');
 
 function getTodos(res){
 	Todo.find(function(err, todos) {
@@ -9,12 +10,12 @@ function getTodos(res){
 				res.send(err)
 
 			res.json(todos); // return all todos in JSON format
-			console.log(todos.text);
 		});
 };
 
+// Get links
 function getLinks(res){
-	Fonotvdb.find(function(err, hyperlinks) {
+	Videolink.find(function(err, hyperlinks) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
@@ -33,7 +34,7 @@ module.exports = function(app) {
 		// use mongoose to get all todos in the database
 		getTodos(res);
 	});
-	app.get('/api/links', function(req, res) {
+	app.get('/api/videolinks', function(req, res) {
 
 		// use mongoose to get all todos in the database
 		getLinks(res);
@@ -70,6 +71,7 @@ module.exports = function(app) {
 
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
-		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+		//res.sendFile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+		res.sendFile('index.html', {root: path.join(__dirname, './public')}); // load the single view file (angular will handle the page changes on the front-end)
 	});
 };

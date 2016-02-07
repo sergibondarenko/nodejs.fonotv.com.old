@@ -1,13 +1,19 @@
 angular.module('todoController', [])
 
 	// inject the Todo service factory into our controller
-	.controller('mainController', ['$scope','$http','Todos', function($scope, $http, Todos) {
+	.controller('mainController', ['$scope','$http','Todos','Videolinks', function($scope, $http, Todos, Videolinks) {
 		$scope.formData = {};
 		$scope.loading = true;
 
 		// GET =====================================================================
 		// when landing on the page, get all todos and show them
 		// use the service to get all the todos
+		Videolinks.get()
+			.success(function(data) {
+				$scope.videolinks = data;
+				$scope.loading = false;
+			});
+
 		Todos.get()
 			.success(function(data) {
 				$scope.todos = data;
