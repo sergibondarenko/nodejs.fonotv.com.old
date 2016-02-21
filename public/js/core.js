@@ -1,1 +1,1 @@
-angular.module('scotchTodo', ['todoController', 'todoService', 'fonotvService']);
+angular.module('fonotv', ['fonotvController', 'fonotvService']);
