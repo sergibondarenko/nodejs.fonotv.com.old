@@ -6,4 +6,4 @@ Continuous video streaming
         2. Delete unavailable videos form DB;
         3. Add soundcloud;
         4. Add accounts;
-        5. Add video crawler;; 
+        5. Add video crawler;;; 
