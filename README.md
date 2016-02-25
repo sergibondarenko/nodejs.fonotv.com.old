@@ -1,2 +1,2 @@
-# ftv
+# fonotv
 Continuous video streaming
