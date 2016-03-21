@@ -1,0 +1,5 @@
+---
+- name: Method-override | Install Method-override
+  become: yes
+  npm: name=method-override global=yes
+  tags: method-override

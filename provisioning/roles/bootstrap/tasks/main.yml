@@ -1,0 +1,5 @@
+---
+- name: Bootstrap | Install Bootstrap
+  become: yes
+  npm: name=bootstrap global=yes
+  tags: bootstrap

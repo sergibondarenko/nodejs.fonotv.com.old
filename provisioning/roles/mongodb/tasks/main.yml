@@ -1,0 +1,47 @@
+---
+- name: Add mongo ppa key
+  become: yes
+  apt_key: >
+    keyserver=hkp://keyserver.ubuntu.com:80
+    id=7F0CEB10
+    state=present
+
+- name: Add mongo sources list
+  become: yes
+  lineinfile: >
+    line="deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen"
+    dest=/etc/apt/sources.list.d/mongodb.list
+    state=present
+    create=yes
+
+- name: Install mongo
+  become: yes
+  apt: name=mongodb-10gen state=latest update_cache=yes
+#- name: MongoDB | Fetch GPG key
+#  become: yes
+#  command: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+#  tags: mongodb
+#
+#- name: MongoDB | Add 10 gen repository
+#  become: yes
+#  shell:
+#    echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | become tee /etc/apt/sources.list.d/10gen.list creates=/etc/apt/sources.list.d/10gen.list
+#
+#- name: MongoDB | Install latest mongodb
+#  become: yes
+#  apt: pkg=mongodb-10gen update-cache=yes
+#  tags: mongodb
+#
+#- name: MongoDB | Run mongo daemon
+#  become: yes
+#  service: name=mongodb state=started
+#  tags: mongodb
+
+##- name: MongoDB | Install ppa key
+##  apt_key: id=7F0CEB10 url=http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x9ECBEC467F0CEB10 state=present
+##- name: MongoDB | Install ppa
+##  apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' state=present
+##- name: MongoDB | Install package
+##  apt: name=mongodb-{{ mongodb_apt_flavor }} state={{ mongodb_apt_state }} force=yes
+##  notify: restart mongod
+

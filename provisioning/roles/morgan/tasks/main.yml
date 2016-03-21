@@ -1,0 +1,5 @@
+---
+- name: Morgan | Install Morgan
+  become: yes
+  npm: name=morgan global=yes
+  tags: morgan

@@ -1,0 +1,5 @@
+---
+- name: Angular-route | Install Angular-route
+  become: yes
+  npm: name=angular-route global=yes
+  tags: angular-route

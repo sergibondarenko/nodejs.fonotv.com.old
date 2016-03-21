@@ -1,0 +1,5 @@
+---
+- name: Angular | Install Angular
+  become: yes
+  npm: name=angular global=yes
+  tags: angular

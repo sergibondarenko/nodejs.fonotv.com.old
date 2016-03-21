@@ -1,0 +1,21 @@
+---
+- hosts: all 
+  #user: trex
+  become: true
+
+  roles:
+    - common
+    - nodejs
+    - express
+    - node-monitor
+    - node-inspector
+    - angular
+    - angular-route
+    - body-parser
+    - bootstrap
+    - method-override
+    - morgan
+    - mongodb
+    - mongoose
+    - yo
+

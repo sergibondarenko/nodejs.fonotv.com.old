@@ -1,0 +1,32 @@
+---
+- name: Common | Update apt cache
+  become: yes
+  apt: update-cache=yes
+  tags: common
+
+- name: Common | Update language
+  become: yes
+  apt: pkg=language-pack-en
+  tags: common
+
+- name: Ensure bash, OpenSSl, and libssl are the latest versions 
+  become: yes
+  apt: name={{ item }} state=latest 
+  with_items: 
+    - bash 
+    - openssl 
+    - libssl-dev 
+    - libssl-doc 
+  tags: packages
+
+- name: Install base packages 
+  become: yes
+  apt: name={{ item }} state=latest 
+  with_items: 
+    - build-essential 
+    - ntp 
+    - htop 
+    - git 
+    - vim 
+    - screen
+  tags: packages

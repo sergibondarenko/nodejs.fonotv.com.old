@@ -1,0 +1,5 @@
+---
+- name: Node Monitor | Install Node Monitor
+  become: yes
+  npm: name=node-monitor global=yes
+  tags: node-monitor

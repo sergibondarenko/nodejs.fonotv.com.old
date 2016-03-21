@@ -1,0 +1,5 @@
+---
+- name: Body-parser | Install Body-parser
+  become: yes
+  npm: name=body-parser global=yes
+  tags: body-parser

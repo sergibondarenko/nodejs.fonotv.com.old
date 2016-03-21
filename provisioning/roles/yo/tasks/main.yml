@@ -1,0 +1,10 @@
+---
+- name: Yeoman | Install Yeoman
+  become: yes
+  npm: name=yo global=yes
+  tags: yeoman
+
+- name: Yeoman | Install Angular.js generator
+  become: yes
+  npm: name=generator-angular global=yes
+  tags: yeoman
