@@ -1,5 +1,5 @@
 ---
 - name: Bootstrap | Install Bootstrap
   become: yes
-  npm: name=bootstrap global=yes
+  npm: name=bootstrap global=no path={{node_module_path}}
   tags: bootstrap

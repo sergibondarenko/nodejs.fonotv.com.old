@@ -1,5 +1,5 @@
 ---
 - name: Mongoose | Install Mongoose
   become: yes
-  npm: name=mongoose global=yes
+  npm: name=mongoose global=no path={{node_module_path}}
   tags: mongoose

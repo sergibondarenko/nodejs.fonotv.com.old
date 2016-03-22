@@ -1,5 +1,5 @@
 ---
 - name: Morgan | Install Morgan
   become: yes
-  npm: name=morgan global=yes
+  npm: name=morgan global=no path={{node_module_path}}
   tags: morgan

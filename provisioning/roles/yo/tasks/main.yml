@@ -1,10 +1,10 @@
 ---
 - name: Yeoman | Install Yeoman
   become: yes
-  npm: name=yo global=yes
+  npm: name=yo global=no path={{node_module_path}}
   tags: yeoman
 
 - name: Yeoman | Install Angular.js generator
   become: yes
-  npm: name=generator-angular global=yes
+  npm: name=generator-angular global=no path={{node_module_path}}
   tags: yeoman

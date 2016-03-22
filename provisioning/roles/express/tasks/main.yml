@@ -1,5 +1,5 @@
 ---
 - name: Express | Install Express
   become: yes
-  npm: name=express global=yes
+  npm: name=express global=no path={{node_module_path}}
   tags: express

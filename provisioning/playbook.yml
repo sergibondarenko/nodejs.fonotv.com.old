@@ -5,6 +5,7 @@
 
   roles:
     - common
+    - system
     - nodejs
     - express
     - node-monitor

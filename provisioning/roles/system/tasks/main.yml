@@ -1,0 +1,13 @@
+---
+- name: System | Adding the path in the bashrc files
+  lineinfile: 
+     dest=/home/vagrant/.bashrc 
+     line='export PATH=$PATH:/usr/lib' 
+     insertafter='EOF' 
+     regexp='export PATH=\$PATH:/usr/lib' 
+     state=present
+
+- name: System | Source the bashrc file
+  shell: source /home/vagrant/.bashrc
+  args: 
+    executable: /bin/bash

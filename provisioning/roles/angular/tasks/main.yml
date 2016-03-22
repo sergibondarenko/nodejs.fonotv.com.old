@@ -1,5 +1,5 @@
 ---
 - name: Angular | Install Angular
   become: yes
-  npm: name=angular global=yes
+  npm: name=angular global=no path={{node_module_path}}
   tags: angular

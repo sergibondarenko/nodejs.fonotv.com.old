@@ -1,5 +1,10 @@
 ---
 - name: Node-inspector | Install Node-inspector
   become: yes
+  npm: name=node-inspector global=no path={{node_module_path}}
+  tags: node-inspector
+
+- name: Node-inspector | Install Node-inspector
+  become: yes
   npm: name=node-inspector global=yes
   tags: node-inspector
