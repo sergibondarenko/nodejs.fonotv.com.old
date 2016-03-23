@@ -1,12 +1,7 @@
 ---
 - name: Common | Update apt cache
   become: yes
-  apt: update-cache=yes
-  tags: common
-
-- name: Common | Update language
-  become: yes
-  apt: pkg=language-pack-en
+  apt: update_cache=yes
   tags: common
 
 - name: Ensure bash, OpenSSl, and libssl are the latest versions 
@@ -28,5 +23,6 @@
     - htop 
     - git 
     - vim 
+    - curl 
     - screen
   tags: packages

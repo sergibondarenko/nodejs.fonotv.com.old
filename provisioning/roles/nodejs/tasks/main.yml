@@ -4,8 +4,13 @@
   become: yes
   tags: nodejs
 
-- name: Node.js | Add the Node.js PPA
-  apt_repository: repo='ppa:chris-lea/node.js' state=present
+#- name: Node.js | Add the Node.js PPA
+#  apt_repository: repo='ppa:chris-lea/node.js' state=present
+#  become: yes
+#  tags: nodejs
+
+- name: Node.js | Add the Node.js repo
+  shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
   become: yes
   tags: nodejs
 
@@ -13,3 +18,8 @@
   apt: pkg=nodejs update-cache=yes
   become: yes
   tags: nodejs
+
+- name: Other modules | Install
+  shell: cd /vagrant && npm install
+  tags: nodejs
+

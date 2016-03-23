@@ -7,3 +7,9 @@ Continuous video streaming
         3. Add soundcloud;
         4. Add accounts;
         5. Add video crawler;;;;; 
+
+    Run environment:
+        vagrant up
+        vagrant ssh
+        node --debug /vagrant/server.js &
+        node-inspector
