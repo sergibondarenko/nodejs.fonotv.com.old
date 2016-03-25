@@ -12,6 +12,9 @@
     "express": "",
     "method-override": "",
     "mongoose": "",
-    "morgan": ""
+    "morgan": "",
+    "videogular": "",
+    "angular-sanitize": "",
+    "jquery": ""
   }
 }
