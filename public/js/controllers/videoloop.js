@@ -21,16 +21,31 @@ angular.module('videoloopController', [])
       console.log($scope.videolinks[index].file);
     };
 
-    // Play first video
-    playVideo(currVideoId);
-
-    // Play other videos
-    video.addEventListener('ended', function() {
+    // Play next video in the DB
+    var playNextVideo = function() {
       currVideoId++;
       if (currVideoId >= videoArrLen) {
         currVideoId = 0;
       }
       playVideo(currVideoId);
+    };
+
+    // Play the first video
+    playVideo(currVideoId);
+
+    // Play next video if on the current video end
+    video.addEventListener('ended', function() {
+      playNextVideo();
+    });
+
+    // Play next video if error detected
+    video.addEventListener('error', function() {
+      playNextVideo();
+    });
+
+    // Play next video if the current video is not available
+    video.addEventListener('stalled', function() {
+      playNextVideo();
     });
 
   });
