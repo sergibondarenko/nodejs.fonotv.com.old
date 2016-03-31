@@ -11,7 +11,7 @@ angular.module('videoloopController', [])
 
     var currVideoId = 0;
     var videoArrLen = $scope.videolinks.length;
-    var video = document.getElementById("video-el");
+    var video = document.getElementById("video-el-fst");
 
     // Load and play video
     var playVideo = function(index) {
