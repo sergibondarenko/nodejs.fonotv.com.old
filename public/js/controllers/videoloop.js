@@ -6,47 +6,96 @@ angular.module('videoloopController', [])
 
   // Get video files and play them   
   Videolinks.get().success(function(data) {
+    var videolinks = data;
  
-    $scope.videolinks = data;
-
+    $scope.videoSw = {
+      fst: true,
+      snd: false,
+      next: false
+    };
+  
     var currVideoId = 0;
-    var videoArrLen = $scope.videolinks.length;
-    var video = document.getElementById("video-el-fst");
+    var videoArrLen = videolinks.length;
+    var videoFst = document.getElementById("video-el-fst");
+    var videoSnd = document.getElementById("video-el-snd");
 
-    // Load and play video
-    var playVideo = function(index) {
-      video.setAttribute('src', $scope.videolinks[index].file);
-      video.load();
-      video.play();
-      console.log($scope.videolinks[index].file);
-    };
-
-    // Play next video in the DB
-    var playNextVideo = function() {
-      currVideoId++;
-      if (currVideoId >= videoArrLen) {
+    // Load video for a video tag (el)
+    var loadVideo = function(el, index) {
+      if (index >= videoArrLen) {
         currVideoId = 0;
+        loadVideo(el, currVideoId);
       }
-      playVideo(currVideoId);
+
+      if ((videolinks[index] !== 'undefined') && (videolinks[index].hasOwnProperty('file'))) {
+        el.setAttribute('src', videolinks[index].file);
+        el.load();
+      } else {
+        currVideoId++;
+        loadVideo(el, currVideoId);
+      }
     };
 
-    // Play the first video
-    playVideo(currVideoId);
+    // Play video for a given video tag
+    var playVideo = function(el) {
+      el.play();
+    };
+
+    // Switch between video elements
+    var switchVideo = function() {
+      currVideoId++;
+
+      if ($scope.videoSw.next === true) {
+        $scope.videoSw.next = false;
+        videoSnd.style.display = 'block';
+        videoFst.style.display = 'none';
+
+        playVideo(videoSnd);
+        loadVideo(videoFst, currVideoId);
+      } else {
+        $scope.videoSw.next = true;
+        videoSnd.style.display = 'none';
+        videoFst.style.display = 'block';
+
+        playVideo(videoFst);
+        loadVideo(videoSnd, currVideoId);
+      } 
+    };
 
     // Play next video if on the current video end
-    video.addEventListener('ended', function() {
-      playNextVideo();
+    videoFst.addEventListener('ended', function() {
+      switchVideo();
+    });
+    videoSnd.addEventListener('ended', function() {
+      switchVideo();
     });
 
     // Play next video if error detected
-    video.addEventListener('error', function() {
-      playNextVideo();
+    videoFst.addEventListener('error', function() {
+      switchVideo();
+    });
+    videoSnd.addEventListener('error', function() {
+      switchVideo();
     });
 
     // Play next video if the current video is not available
-    video.addEventListener('stalled', function() {
-      playNextVideo();
+    videoFst.addEventListener('stalled', function() {
+      switchVideo();
+      console.log('stalled');
+      console.log(videoFst);
     });
+    videoSnd.addEventListener('stalled', function() {
+      switchVideo();
+      console.log('stalled');
+      console.log(videoSnd);
+    });
+
+    // Load and play first video on the first video el
+    loadVideo(videoFst, currVideoId);
+    playVideo(videoFst);
+
+    currVideoId++;
+    loadVideo(videoSnd, currVideoId);
+    $scope.videoSw.next = true;
 
   });
 
