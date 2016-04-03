@@ -7,7 +7,7 @@ function getTodos(res){
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
-				res.send(err)
+				res.send(err);
 
 			res.json(todos); // return all todos in JSON format
 		});
@@ -19,7 +19,7 @@ function getLinks(res){
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
-				res.send(err)
+				res.send(err);
 
 			res.json(hyperlinks); // return all todos in JSON format
 		});
@@ -34,10 +34,23 @@ module.exports = function(app) {
 		// use mongoose to get all todos in the database
 		getTodos(res);
 	});
+
 	app.get('/api/videolinks', function(req, res) {
 
 		// use mongoose to get all todos in the database
 		getLinks(res);
+	});
+
+	// delete a todo
+	app.delete('/api/videolinks/:video_id', function(req, res) {
+		Videolink.remove({
+			_id : req.params.video_id
+		}, function(err, videolink) {
+			if (err)
+				res.send(err);
+
+			getLinks(res);
+		});
 	});
 
 	// create todo and send back all todos after creation

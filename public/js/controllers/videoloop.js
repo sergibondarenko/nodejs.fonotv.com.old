@@ -26,9 +26,14 @@ angular.module('videoloopController', [])
         loadVideo(el, currVideoId);
       }
 
-      if ((videolinks[index] !== 'undefined') && (videolinks[index].hasOwnProperty('file'))) {
-        el.setAttribute('src', videolinks[index].file);
-        el.load();
+      if (videolinks[index] !== 'undefined') {
+        if (videolinks[index].hasOwnProperty('file')) {
+          el.setAttribute('src', videolinks[index].file);
+          el.load();
+        } else {
+          currVideoId++;
+          loadVideo(el, currVideoId);
+        }
       } else {
         currVideoId++;
         loadVideo(el, currVideoId);
@@ -61,6 +66,7 @@ angular.module('videoloopController', [])
           loadVideo(videoSnd, currVideoId);
         } 
       } else { // if error or stalled
+          // switch to playing next video tag
           if (el.style.display === 'none') {
             loadVideo(el, currVideoId);
           } else {
@@ -79,7 +85,16 @@ angular.module('videoloopController', [])
               playVideo(videoFst);
               loadVideo(videoSnd, currVideoId);
             } 
-          }        
+          }
+
+          // delete problem link
+          var idToDelete = currVideoId - 1;
+          Videolinks.delete(idToDelete)
+            .success(function(data) {
+              console.log('Deleted: ' + videolinks[idToDelete].file);
+              videolinks = data;
+              console.log(videolinks);
+            });
       }
     };
 
