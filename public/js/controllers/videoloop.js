@@ -41,50 +41,76 @@ angular.module('videoloopController', [])
     };
 
     // Switch between video elements
-    var switchVideo = function() {
+    var switchVideo = function(el, ev) {
       currVideoId++;
 
-      if ($scope.videoSw.next === true) {
-        $scope.videoSw.next = false;
-        videoSnd.style.display = 'block';
-        videoFst.style.display = 'none';
+      if (ev === 'ended') {
+        if ($scope.videoSw.next === true) {
+          $scope.videoSw.next = false;
+          videoSnd.style.display = 'block';
+          videoFst.style.display = 'none';
 
-        playVideo(videoSnd);
-        loadVideo(videoFst, currVideoId);
-      } else {
-        $scope.videoSw.next = true;
-        videoSnd.style.display = 'none';
-        videoFst.style.display = 'block';
+          playVideo(videoSnd);
+          loadVideo(videoFst, currVideoId);
+        } else {
+          $scope.videoSw.next = true;
+          videoSnd.style.display = 'none';
+          videoFst.style.display = 'block';
 
-        playVideo(videoFst);
-        loadVideo(videoSnd, currVideoId);
-      } 
+          playVideo(videoFst);
+          loadVideo(videoSnd, currVideoId);
+        } 
+      } else { // if error or stalled
+          if (el.style.display === 'none') {
+            loadVideo(el, currVideoId);
+          } else {
+            if (el === videoFst) {
+              $scope.videoSw.next = false;
+              videoSnd.style.display = 'block';
+              videoFst.style.display = 'none';
+
+              playVideo(videoSnd);
+              loadVideo(videoFst, currVideoId);
+            } else {
+              $scope.videoSw.next = true;
+              videoSnd.style.display = 'none';
+              videoFst.style.display = 'block';
+
+              playVideo(videoFst);
+              loadVideo(videoSnd, currVideoId);
+            } 
+          }        
+      }
     };
 
     // Play next video if on the current video end
     videoFst.addEventListener('ended', function() {
-      switchVideo();
+      switchVideo(videoFst, 'ended');
     });
     videoSnd.addEventListener('ended', function() {
-      switchVideo();
+      switchVideo(videoSnd, 'ended');
     });
 
     // Play next video if error detected
     videoFst.addEventListener('error', function() {
-      switchVideo();
+      switchVideo(videoFst, 'error');
+      console.log('error');
+      console.log(videoFst);
     });
     videoSnd.addEventListener('error', function() {
-      switchVideo();
+      switchVideo(videoSnd, 'error');
+      console.log('error');
+      console.log(videoSnd);
     });
 
     // Play next video if the current video is not available
     videoFst.addEventListener('stalled', function() {
-      switchVideo();
+      switchVideo(videoFst, 'stalled');
       console.log('stalled');
       console.log(videoFst);
     });
     videoSnd.addEventListener('stalled', function() {
-      switchVideo();
+      switchVideo(videoSnd, 'stalled');
       console.log('stalled');
       console.log(videoSnd);
     });
