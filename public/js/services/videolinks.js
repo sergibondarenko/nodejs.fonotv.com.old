@@ -8,7 +8,7 @@ angular.module('fonotvService', [])
 				return $http.get('/api/videolinks');
 			},
 			delete : function(id) {
-				return $http.delete('/api/videolinks/:' + id);
+				return $http.delete('/api/videolinks/' + id);
 			}
 		};
 	}]);

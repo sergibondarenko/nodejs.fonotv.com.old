@@ -89,7 +89,7 @@ angular.module('videoloopController', [])
 
           // delete problem link
           var idToDelete = currVideoId - 1;
-          Videolinks.delete(idToDelete)
+          Videolinks.delete(videolinks[idToDelete]._id)
             .success(function(data) {
               console.log('Deleted: ' + videolinks[idToDelete].file);
               videolinks = data;

@@ -2,6 +2,9 @@ var path = require('path');
 var Todo = require('./models/todo');
 var Videolink = require('./models/fonotvdb');
 
+var mongodb = require('mongodb');
+var ObjectId = require('mongodb').ObjectID;
+
 function getTodos(res){
 	Todo.find(function(err, todos) {
 
@@ -44,8 +47,11 @@ module.exports = function(app) {
 	// delete a todo
 	app.delete('/api/videolinks/:video_id', function(req, res) {
 		Videolink.remove({
-			_id : req.params.video_id
+			_id : ObjectId(req.params.video_id)
 		}, function(err, videolink) {
+      console.log(req.params);
+      console.log(ObjectId(req.params.video_id));
+      console.log(videolink);
 			if (err)
 				res.send(err);
 
