@@ -19,6 +19,26 @@ angular.module('videoloopController', [])
     var videoFst = document.getElementById("video-el-fst");
     var videoSnd = document.getElementById("video-el-snd");
 
+    // Randomize
+    var randomizer = function(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+    
+      // While there remain elements to shuffle
+      while (0 !== currentIndex) {
+    
+        // Pick a remaining element
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+    
+        // And swap it with the current element
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+    
+      return array;
+    };
+
     // Load video for a video tag (el)
     var loadVideo = function(el, index) {
       if (index >= videoArrLen) {
@@ -49,7 +69,7 @@ angular.module('videoloopController', [])
     var switchVideo = function(el, ev) {
       currVideoId++;
 
-      if (ev === 'ended') {
+      if (ev === 'ended' || ev === 'stalled') {
         if ($scope.videoSw.next === true) {
           $scope.videoSw.next = false;
           videoSnd.style.display = 'block';
@@ -65,7 +85,7 @@ angular.module('videoloopController', [])
           playVideo(videoFst);
           loadVideo(videoSnd, currVideoId);
         } 
-      } else { // if error or stalled
+      } else { // if error
           // switch to playing next video tag
           if (el.style.display === 'none') {
             loadVideo(el, currVideoId);
@@ -129,6 +149,8 @@ angular.module('videoloopController', [])
       console.log('stalled');
       console.log(videoSnd);
     });
+
+    videolinks = randomizer(videolinks);
 
     // Load and play first video on the first video el
     loadVideo(videoFst, currVideoId);
