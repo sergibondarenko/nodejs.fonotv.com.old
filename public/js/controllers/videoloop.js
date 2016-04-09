@@ -19,26 +19,6 @@ angular.module('videoloopController', [])
     var videoFst = document.getElementById("video-el-fst");
     var videoSnd = document.getElementById("video-el-snd");
 
-    // Randomize
-    var randomizer = function(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-    
-      // While there remain elements to shuffle
-      while (0 !== currentIndex) {
-    
-        // Pick a remaining element
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-    
-        // And swap it with the current element
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-    
-      return array;
-    };
-
     // Load video for a video tag (el)
     var loadVideo = function(el, index) {
       if (index >= videoArrLen) {
@@ -113,7 +93,6 @@ angular.module('videoloopController', [])
             .success(function(data) {
               console.log('Deleted: ' + videolinks[idToDelete].file);
               videolinks = data;
-              console.log(videolinks);
             });
       }
     };
@@ -138,19 +117,19 @@ angular.module('videoloopController', [])
       console.log(videoSnd);
     });
 
-    // Play next video if the current video is not available
-    videoFst.addEventListener('stalled', function() {
-      switchVideo(videoFst, 'stalled');
-      console.log('stalled');
-      console.log(videoFst);
-    });
-    videoSnd.addEventListener('stalled', function() {
-      switchVideo(videoSnd, 'stalled');
-      console.log('stalled');
-      console.log(videoSnd);
-    });
+    //// Play next video if the current video is not available
+    //videoFst.addEventListener('stalled', function() {
+    //  switchVideo(videoFst, 'stalled');
+    //  console.log('stalled');
+    //  console.log(videoFst);
+    //});
+    //videoSnd.addEventListener('stalled', function() {
+    //  switchVideo(videoSnd, 'stalled');
+    //  console.log('stalled');
+    //  console.log(videoSnd);
+    //});
 
-    videolinks = randomizer(videolinks);
+    videolinks = Videolinks.randomize(videolinks);
 
     // Load and play first video on the first video el
     loadVideo(videoFst, currVideoId);
