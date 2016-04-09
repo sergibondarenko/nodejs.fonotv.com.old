@@ -57,6 +57,7 @@ angular.module('videoloopController', [])
 
           playVideo(videoSnd);
           loadVideo(videoFst, currVideoId);
+
         } else {
           $scope.videoSw.next = true;
           videoSnd.style.display = 'none';
@@ -95,6 +96,9 @@ angular.module('videoloopController', [])
               videolinks = data;
             });
       }
+
+      $scope.origLink = videolinks[currVideoId].orig_page;
+      $scope.origLinkTitle = videolinks[currVideoId].title;
     };
 
     // Play next video if on the current video end
@@ -134,6 +138,9 @@ angular.module('videoloopController', [])
     // Load and play first video on the first video el
     loadVideo(videoFst, currVideoId);
     playVideo(videoFst);
+    
+    $scope.origLink = videolinks[currVideoId].orig_page;
+    $scope.origLinkTitle = videolinks[currVideoId].title;
 
     currVideoId++;
     loadVideo(videoSnd, currVideoId);
