@@ -35,7 +35,7 @@
 <body ng-app="fonotv">
 
     <!--<div class="content" ng-controller="fonotvController">-->
-  <div class="content" ng-controller="videoloopController">
+  <div class="content" ng-controller="videoloopController as player">
 		<div class="video-container">
   	  <video preload='auto' autoplay muted id="video-el-fst"></video>
   	  <video preload='auto' muted id="video-el-snd" hidden></video>
@@ -132,6 +132,7 @@
 				</div>
 			</div>
 			<div class="name">
+        <!--<a href="#" class="linked" id="orig-link" target="_blank"><span class="hvr-underline-from-left" id="orig-link-title">HAPPY CATS ARE PLAYING IN THE GARDEN</span> | <img src="img/share.png" alt=""></a>-->
         <a ng-href="{{origLink}}" class="linked" id="orig-link" target="_blank"><span class="hvr-underline-from-left" id="orig-link-title">{{origLinkTitle}}</span> | <img src="img/share.png" alt=""></a>
 			</div>
 		</div>

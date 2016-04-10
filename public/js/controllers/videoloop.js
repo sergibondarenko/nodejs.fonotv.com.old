@@ -9,8 +9,6 @@ angular.module('videoloopController', [])
     var videolinks = data;
  
     $scope.videoSw = {
-      fst: true,
-      snd: false,
       next: false
     };
   
@@ -18,6 +16,7 @@ angular.module('videoloopController', [])
     var videoArrLen = videolinks.length;
     var videoFst = document.getElementById("video-el-fst");
     var videoSnd = document.getElementById("video-el-snd");
+    var extScope = $scope;
 
     // Load video for a video tag (el)
     var loadVideo = function(el, index) {
@@ -47,6 +46,9 @@ angular.module('videoloopController', [])
 
     // Switch between video elements
     var switchVideo = function(el, ev) {
+      extScope.origLink = videolinks[currVideoId].orig_page;
+      extScope.origLinkTitle = videolinks[currVideoId].title;
+
       currVideoId++;
 
       if (ev === 'ended' || ev === 'stalled') {
@@ -57,7 +59,6 @@ angular.module('videoloopController', [])
 
           playVideo(videoSnd);
           loadVideo(videoFst, currVideoId);
-
         } else {
           $scope.videoSw.next = true;
           videoSnd.style.display = 'none';
@@ -96,42 +97,37 @@ angular.module('videoloopController', [])
               videolinks = data;
             });
       }
-
-      $scope.origLink = videolinks[currVideoId].orig_page;
-      $scope.origLinkTitle = videolinks[currVideoId].title;
     };
 
     // Play next video if on the current video end
     videoFst.addEventListener('ended', function() {
-      switchVideo(videoFst, 'ended');
+      extScope.$apply(switchVideo(videoFst, 'ended'));
     });
     videoSnd.addEventListener('ended', function() {
-      switchVideo(videoSnd, 'ended');
+      extScope.$apply(switchVideo(videoSnd, 'ended'));
     });
 
     // Play next video if error detected
     videoFst.addEventListener('error', function() {
-      switchVideo(videoFst, 'error');
+      extScope.$apply(switchVideo(videoFst, 'ended'));
       console.log('error');
       console.log(videoFst);
     });
     videoSnd.addEventListener('error', function() {
-      switchVideo(videoSnd, 'error');
+      extScope.$apply(switchVideo(videoSnd, 'ended'));
       console.log('error');
       console.log(videoSnd);
     });
 
-    //// Play next video if the current video is not available
-    //videoFst.addEventListener('stalled', function() {
-    //  switchVideo(videoFst, 'stalled');
-    //  console.log('stalled');
-    //  console.log(videoFst);
-    //});
-    //videoSnd.addEventListener('stalled', function() {
-    //  switchVideo(videoSnd, 'stalled');
-    //  console.log('stalled');
-    //  console.log(videoSnd);
-    //});
+    // Play next video if the current video is not available
+    videoFst.addEventListener('stalled', function() {
+      console.log('stalled');
+      console.log(videoFst);
+    });
+    videoSnd.addEventListener('stalled', function() {
+      console.log('stalled');
+      console.log(videoSnd);
+    });
 
     videolinks = Videolinks.randomize(videolinks);
 
