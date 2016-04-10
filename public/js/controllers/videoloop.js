@@ -121,10 +121,12 @@ angular.module('videoloopController', [])
 
     // Play next video if the current video is not available
     videoFst.addEventListener('stalled', function() {
+      extScope.$apply(switchVideo(videoFst, 'ended'));
       console.log('stalled');
       console.log(videoFst);
     });
     videoSnd.addEventListener('stalled', function() {
+      extScope.$apply(switchVideo(videoSnd, 'ended'));
       console.log('stalled');
       console.log(videoSnd);
     });
