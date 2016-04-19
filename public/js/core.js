@@ -1,2 +1,2 @@
 /*global angular*/
-angular.module('fonotv', ['fonotvController', 'videoloopController', 'fonotvService']);
+angular.module('fonotv', ['fonotvController', 'videoloopController', 'videoloop_blackController', 'fonotvService']);
