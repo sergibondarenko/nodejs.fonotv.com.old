@@ -6,11 +6,11 @@ var Schema = mongoose.Schema;
 
 var coubvideoSchema = new Schema ({
   video_orig: String,
-  flag: Number,
-  abuses: Number,
-  recoubs_by_users_channels: Number,
-  recoub: Number,
-  like: Number,
+  flag: {type: Boolean, default: null},
+  abuses: {type: Number, default: null},
+  recoubs_by_users_channels: {type: Number, default: null},
+  recoub: {type: Number, default: null},
+  like: {type: Boolean, default: null},
   in_my_best2015: Boolean,
   type: String,
   permalink: String,
@@ -22,8 +22,8 @@ var coubvideoSchema = new Schema ({
   updated_at: Date,
   is_done: Boolean,
   views_count: Number,
-  cotd: Number,
-  cotd_at: Number,
+  cotd: {type: Boolean, default: null},
+  cotd_at: {type: Number, default: null},
   published_at: Date,
   views_increase_count: Number,
   shares_count: Number,
@@ -33,7 +33,7 @@ var coubvideoSchema = new Schema ({
   is_editable: Boolean,
   original_sound: Boolean,
   has_sound: Boolean,
-  recoub_to: Number,
+  recoub_to: {type: Number, default: null},
   file_versions:{
     web:{
       template: String,
@@ -108,14 +108,14 @@ var coubvideoSchema = new Schema ({
   banned: Boolean,
   global_safe: Boolean,
   comments_count: Number,
-  audio_file_url: Number,
+  audio_file_url: {type: String, default: null},
   external_download: Boolean,
-  application: Number,
+  application: {type: String, default: null},
   channel:{
     id: Number,
-    permalink: Number,
-    title: Number,
-    description: Number,
+    permalink: String,
+    title: String,
+    description: {type: String, default: null},
     followers_count: Number,
     following_count: Number,
     avatar_versions:{
@@ -127,7 +127,7 @@ var coubvideoSchema = new Schema ({
   picture: String,
   timeline_picture: String,
   small_picture: String,
-  sharing_picture: Number,
+  sharing_picture: {type: String, default: null},
   percent_done: Number,
   tags:[
     {
@@ -162,17 +162,17 @@ var coubvideoSchema = new Schema ({
   video_block_banned: Boolean,
   duration: Number,
   promo_winner: Boolean,
-  promo_winner_recoubers: Number,
+  promo_winner_recoubers: {type: String, default: null},
   editorial_info:{},
-  tracking_pixel_url: Number,
-  promo_hint: Number,
-  beeline_best_2014: Number,
+  tracking_pixel_url: {type: String, default: null},
+  promo_hint: {type: String, default: null},
+  beeline_best_2014: {type: String, default: null},
   from_web_editor: Boolean,
   normalize_sound: Boolean,
   loops_count: Number,
   total_views_duration: Number,
   best2015_addable: Boolean,
-  ahmad_promo: Number,
+  //ahmad_promo: {type: ObjectId, ref: 'ahmad_promo'},
   position_on_page: Number
 });
 
