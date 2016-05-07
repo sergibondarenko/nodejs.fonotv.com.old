@@ -10,13 +10,12 @@
     - nodejs
     - node-monitor
     - node-inspector
-#    - express
-#    - angular
-#    - angular-route
-#    - body-parser
-#    - bootstrap
-#    - method-override
-#    - morgan
-#    - mongoose
-#    - yo
-#
+    - express
+    - angular
+    - angular-route
+    - body-parser
+    - bootstrap
+    - method-override
+    - morgan
+    - mongoose
+    - yo
