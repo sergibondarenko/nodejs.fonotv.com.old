@@ -78,4 +78,9 @@ Vagrant.configure(2) do |config|
     #ansible.inventory_path = "provisioning/hosts"
     #ansible.sudo = true
   end
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--nictype1", "virtio"]
+    v.memory = 512
+    v.cpus = 1
+  end
 end
