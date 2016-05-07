@@ -1,4 +1,5 @@
 var http = require('http');
+var CoubVideo = require('./models/coubdb.js');
 
 function CoubApi (url) {
   this.url = url;
@@ -40,7 +41,17 @@ function storeData (data) {
   var i;
   console.log("Storrrreee");
   for(i = 0; i < 10; i++) {
+    delete data.coubs[i].id;
+    data.coubs[i].video_orig = "coub.com";
     this.storage.push(data.coubs[i]);
+
+    var video = new CoubVideo(data.coubs[i]);
+    video.save(function (err) {
+      if (err) {
+        throw err;
+      }
+      console.log('Video saved successfully!');
+    });
   }
 
   console.log(this.storage.length);
@@ -62,7 +73,7 @@ function getHotData (order, page, number) {
   var url = this.url +
             "timeline/hot?page=" + page +
             "&per_page=" + number + 
-            "&order_by" + order
+            "&order_by=" + order
 
   this.httpReq(url).then(function (data) {
     this.storeData(data);
