@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/coubdb');
 var Schema = mongoose.Schema;
 
 var coubvideoSchema = new Schema ({
-  video_orig: String,
+  id: Number,
   flag: {type: Boolean, default: null},
   abuses: {type: Number, default: null},
   recoubs_by_users_channels: {type: Number, default: null},
@@ -172,7 +172,7 @@ var coubvideoSchema = new Schema ({
   loops_count: Number,
   total_views_duration: Number,
   best2015_addable: Boolean,
-  //ahmad_promo: {type: ObjectId, ref: 'ahmad_promo'},
+  ahmad_promo: {},
   position_on_page: Number
 });
 
