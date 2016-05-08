@@ -37,52 +37,60 @@ function httpReq (url) {
   return promise;
 }
 
-function storeData (data) {
+function storeData (data, per_page) {
   var i;
-  console.log("Storrrreee");
-  for(i = 0; i < 10; i++) {
-    delete data.coubs[i].id;
-    data.coubs[i].video_orig = "coub.com";
-    this.storage.push(data.coubs[i]);
+  for(i = 0; i < per_page; i++) {
 
-    var video = new CoubVideo(data.coubs[i]);
-    video.save(function (err) {
-      if (err) {
-        throw err;
+    console.log("Before i = " + i);
+
+    CoubVideo.count({id: data.coubs[i].id}, function (err, count) {
+
+      console.log("After i = " + i);
+
+      if (count == 0) {
+        var video = new CoubVideo(data.coubs[i]);
+
+        video.save(function (err) {
+          if (err) throw err;
+          console.log("Saved successfully!");
+        });
+      } else { 
+        console.log("Duplicate");
       }
-      console.log('Video saved successfully!');
+
     });
   }
-
-  console.log(this.storage.length);
 }
 
-function searchData (searchtext, order, page, number) {
+function searchData (searchtext, order, page, per_page) {
   var url = this.url +
             "search?q=" + searchtext +
             "&order_by=" + order +
-            "&per_page=" + number + 
+            "&per_page=" + per_page + 
             "&page=" + page;
 
   this.httpReq(url).then(function (data) {
-    this.storeData(data);
+    this.storeData(data, per_page);
   }.bind(this));
 }
 
-function getHotData (order, page, number) {
+function getHotData (order, page, per_page) {
   var url = this.url +
             "timeline/hot?page=" + page +
-            "&per_page=" + number + 
+            "&per_page=" + per_page + 
             "&order_by=" + order
 
   this.httpReq(url).then(function (data) {
-    this.storeData(data);
+    this.storeData(data, per_page);
   }.bind(this));
 }
 
 var coub = new CoubApi("http://coub.com/api/v2/");
+var numOfPages = 1;
+var numPerPage = 1;
 var i;
-for(i = 0; i < 10; i++) {
-  coub.getHotData("newest_popular", i, 10);
+
+for(i = 0; i < numOfPages; i++) {
+  coub.getHotData("newest_popular", i, numPerPage);
 }
 
