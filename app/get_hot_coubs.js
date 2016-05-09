@@ -43,7 +43,7 @@ function storeData (data, per_page) {
 
     console.log("Before i = " + i);
 
-    CoubVideo.count({id: data.coubs[i].id}, function (err, count) {
+    CoubVideo.count({id: data.coubs[i].id}, function (err, count, i) {
 
       console.log("After i = " + i);
 
@@ -58,7 +58,7 @@ function storeData (data, per_page) {
         console.log("Duplicate");
       }
 
-    });
+    }.bind(null, i));
   }
 }
 
