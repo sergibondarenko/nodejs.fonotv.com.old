@@ -1,3 +1,5 @@
+/*global Promise, httpReq, searchData, getHotData, storeData*/
+
 var http = require('http');
 var CoubVideo = require('./models/coubdb.js');
 
@@ -29,7 +31,7 @@ function httpReq (url) {
       });
 
     }).on('error', function (err) {
-      console.log("Error: ", e);
+      console.log("Error: ", err);
     });
 
   });
@@ -41,11 +43,17 @@ function storeData (data, per_page) {
   
   function insertVideoDoc (i) {
     CoubVideo.count({id: data.coubs[i].id}, function (err, count) {
+      if (err) {
+        throw err;
+      }
+
       if (count === 0 || count === null) {
         var video = new CoubVideo(data.coubs[i]);
 
         video.save(function (err) {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           console.log("Saved successfully!");
         });
       } else { 
@@ -76,7 +84,7 @@ function getHotData (order, page, per_page) {
   var url = this.url +
             "timeline/hot?page=" + page +
             "&per_page=" + per_page + 
-            "&order_by=" + order
+            "&order_by=" + order;
 
   this.httpReq(url).then(function (data) {
     this.storeData(data, per_page);
