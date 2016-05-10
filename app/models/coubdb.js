@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/coubdb');
+mongoose.connect('mongodb://localhost/fonotvdatabase');
 
 var Schema = mongoose.Schema;
 
