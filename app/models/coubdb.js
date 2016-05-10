@@ -23,7 +23,7 @@ var coubvideoSchema = new Schema ({
   is_done: Boolean,
   views_count: Number,
   cotd: {type: Boolean, default: null},
-  cotd_at: {type: Number, default: null},
+  cotd_at: {type: Date, default: null},
   published_at: Date,
   views_increase_count: Number,
   shares_count: Number,
@@ -110,7 +110,7 @@ var coubvideoSchema = new Schema ({
   comments_count: Number,
   audio_file_url: {type: String, default: null},
   external_download: Boolean,
-  application: {type: String, default: null},
+  application: {},
   channel:{
     id: Number,
     permalink: String,
