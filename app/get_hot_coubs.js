@@ -14,6 +14,7 @@ function CoubApi (url, numPerPage, numOfPages) {
   this.storeData = storeData;
 }
 
+// Get data from server
 function httpReq (url) {
   var promise = new Promise (function (resolve, reject) {
 
@@ -41,6 +42,7 @@ function httpReq (url) {
   return promise;
 }
 
+// Store data in MongoDB
 function storeData (data, per_page) {
   
   function insertVideoDoc (i) {
@@ -70,6 +72,7 @@ function storeData (data, per_page) {
   }
 }
 
+// Search for coubs
 function searchData (searchtext, order, page, per_page) {
   var url = this.url +
             "search?q=" + searchtext +
@@ -82,6 +85,7 @@ function searchData (searchtext, order, page, per_page) {
   }.bind(this));
 }
 
+// Get hot coubs
 function getHotData (order, page, per_page) {
   var url = this.url +
             "timeline/hot?page=" + page +
@@ -93,6 +97,7 @@ function getHotData (order, page, per_page) {
   }.bind(this));
 }
 
+// Get data
 function getData () { 
   var i;
   for(i = 0; i < this.numOfPages; i++) {
