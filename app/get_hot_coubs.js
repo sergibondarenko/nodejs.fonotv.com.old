@@ -38,16 +38,10 @@ function httpReq (url) {
 }
 
 function storeData (data, per_page) {
-  var i;
-  for(i = 0; i < per_page; i++) {
-
-    console.log("Before i = " + i);
-
-    CoubVideo.count({id: data.coubs[i].id}, function (err, count, i) {
-
-      console.log("After i = " + i);
-
-      if (count == 0) {
+  
+  function insertVideoDoc (i) {
+    CoubVideo.count({id: data.coubs[i].id}, function (err, count) {
+      if (count === 0 || count === null) {
         var video = new CoubVideo(data.coubs[i]);
 
         video.save(function (err) {
@@ -57,8 +51,12 @@ function storeData (data, per_page) {
       } else { 
         console.log("Duplicate");
       }
+    });
+  }
 
-    }.bind(null, i));
+  var i;
+  for(i = 0; i < per_page; i++) {
+    insertVideoDoc(i);
   }
 }
 
@@ -86,7 +84,7 @@ function getHotData (order, page, per_page) {
 }
 
 var coub = new CoubApi("http://coub.com/api/v2/");
-var numOfPages = 1;
+var numOfPages = 30;
 var numPerPage = 1;
 var i;
 
