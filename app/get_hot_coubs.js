@@ -1,11 +1,13 @@
-/*global Promise, httpReq, searchData, getHotData, storeData*/
+/*global Promise, getData, httpReq, searchData, getHotData, storeData*/
 
 var http = require('http');
 var CoubVideo = require('./models/coubdb.js');
 
-function CoubApi (url) {
+function CoubApi (url, numPerPage, numOfPages) {
   this.url = url;
-  this.storage = [];
+  this.numOfPages = numOfPages;
+  this.numPerPage = numPerPage;
+  this.getData = getData;
   this.httpReq = httpReq;
   this.searchData = searchData;
   this.getHotData = getHotData;
@@ -31,7 +33,7 @@ function httpReq (url) {
       });
 
     }).on('error', function (err) {
-      console.log("Error: ", err);
+      console.log(err);
     });
 
   });
@@ -44,7 +46,7 @@ function storeData (data, per_page) {
   function insertVideoDoc (i) {
     CoubVideo.count({id: data.coubs[i].id}, function (err, count) {
       if (err) {
-        throw err;
+        console.log(err);
       }
 
       if (count === 0 || count === null) {
@@ -52,7 +54,7 @@ function storeData (data, per_page) {
 
         video.save(function (err) {
           if (err) {
-            throw err;
+            console.log(err);
           }
           console.log("Saved successfully!");
         });
@@ -91,12 +93,12 @@ function getHotData (order, page, per_page) {
   }.bind(this));
 }
 
-var coub = new CoubApi("http://coub.com/api/v2/");
-var numOfPages = 30;
-var numPerPage = 1;
-var i;
-
-for(i = 0; i < numOfPages; i++) {
-  coub.getHotData("newest_popular", i, numPerPage);
+function getData () { 
+  var i;
+  for(i = 0; i < this.numOfPages; i++) {
+    this.getHotData("newest_popular", i, this.numPerPage);
+  }
 }
 
+var coub = new CoubApi("http://coub.com/api/v2/", 2, 50);
+coub.getData();
