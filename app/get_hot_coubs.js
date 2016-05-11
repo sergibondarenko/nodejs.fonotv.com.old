@@ -1,6 +1,7 @@
 /*global Promise, getData, httpReq, searchData, getHotData, storeData*/
 
 var http = require('http');
+var mongoose = require('mongoose');
 var CoubVideo = require('./models/coubdb.js');
 
 function CoubApi (url, numPerPage, numOfPages) {
@@ -105,5 +106,9 @@ function getData () {
   }
 }
 
-var coub = new CoubApi("http://coub.com/api/v2/", 2, 50);
+var coub = new CoubApi("http://coub.com/api/v2/", 20, 40);
 coub.getData();
+
+setTimeout(function () {
+  mongoose.disconnect();
+}, 240000);
