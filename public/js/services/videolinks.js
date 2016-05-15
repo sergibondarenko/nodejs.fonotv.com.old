@@ -1,18 +1,33 @@
+/*global angular*/
 angular.module('fonotvService', [])
 
-	// super simple service
 	// each function returns a promise object 
 	.factory('Videolinks', ['$http',function($http) {
 		return {
 			get : function() {
-				console.log('fonotvService works!\n');
 				return $http.get('/api/videolinks');
-			}//,
-			//create : function(todoData) {
-			//	return $http.post('/api/videolinks', todoData);
-			//},
-			//delete : function(id) {
-			//	return $http.delete('/api/videolinks/' + id);
-			//}
-		}
+			},
+			delete : function(id) {
+				return $http.delete('/api/videolinks/' + id);
+			},
+      randomize : function(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+    
+        // While there remain elements to shuffle
+        while (0 !== currentIndex) {
+    
+          // Pick a remaining element
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+    
+          // And swap it with the current element
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+    
+        return array;
+
+      }
+		};
 	}]);

@@ -2,8 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var db_schema = new Schema({
-	//text: String
-	_id: String,
 	source: String,
 	orig_page: String,
 	likes: Number,
