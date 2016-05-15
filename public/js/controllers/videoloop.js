@@ -6,143 +6,81 @@ angular.module('videoloopController', [])
 
   // Get video files and play them   
   Videolinks.get().success(function(data) {
-    var videolinks = data;
+    //var videolinks = data;
  
-    $scope.videoSw = {
-      next: false
+    var video = {
+      next: false,
+      id: 0,
+      arr: data,
+      arrLen: data.length,
+      fstTag: document.getElementById("video-el-fst"),
+      sndTag: document.getElementById("video-el-snd")
     };
   
-    var currVideoId = 0;
-    var videoArrLen = videolinks.length;
-    var videoFst = document.getElementById("video-el-fst");
-    var videoSnd = document.getElementById("video-el-snd");
-    var extScope = $scope;
 
     // Load video for a video tag (el)
-    var loadVideo = function(el, index) {
-      if (index >= videoArrLen) {
-        currVideoId = 0;
-        loadVideo(el, currVideoId);
-      }
-
-      if (videolinks[index] !== 'undefined') {
-        if (videolinks[index].hasOwnProperty('file')) {
-          el.setAttribute('src', videolinks[index].file);
-          el.load();
-        } else {
-          currVideoId++;
-          loadVideo(el, currVideoId);
-        }
-      } else {
-        currVideoId++;
-        loadVideo(el, currVideoId);
-      }
-    };
+    function loadVideo (tag, index) {
+      console.log(video);
+      tag.setAttribute("src", video.arr[index].file);
+      tag.load();
+    }
 
     // Play video for a given video tag
-    var playVideo = function(el) {
-      el.play();
-    };
+    function playVideo (tag) {
+      tag.play();
+    }
 
-    // Switch between video elements
-    var switchVideo = function(el, ev) {
-      extScope.origLink = videolinks[currVideoId].orig_page;
-      extScope.origLinkTitle = videolinks[currVideoId].title;
+    //// Stop video for a given video tag
+    //function stopVideo (tag) {
+    //  tag.stop();
+    //}
 
-      currVideoId++;
+    // Switch video
+    function switchVideo (tag, currStat) {
 
-      if (ev === 'ended' || ev === 'stalled') {
-        if ($scope.videoSw.next === true) {
-          $scope.videoSw.next = false;
-          videoSnd.style.display = 'block';
-          videoFst.style.display = 'none';
-
-          playVideo(videoSnd);
-          loadVideo(videoFst, currVideoId);
-        } else {
-          $scope.videoSw.next = true;
-          videoSnd.style.display = 'none';
-          videoFst.style.display = 'block';
-
-          playVideo(videoFst);
-          loadVideo(videoSnd, currVideoId);
-        } 
-      } else { // if error
-          // switch to playing next video tag
-          if (el.style.display === 'none') {
-            loadVideo(el, currVideoId);
-          } else {
-            if (el === videoFst) {
-              $scope.videoSw.next = false;
-              videoSnd.style.display = 'block';
-              videoFst.style.display = 'none';
-
-              playVideo(videoSnd);
-              loadVideo(videoFst, currVideoId);
-            } else {
-              $scope.videoSw.next = true;
-              videoSnd.style.display = 'none';
-              videoFst.style.display = 'block';
-
-              playVideo(videoFst);
-              loadVideo(videoSnd, currVideoId);
-            } 
-          }
-
-          // delete problem link
-          var idToDelete = currVideoId - 1;
-          Videolinks.delete(videolinks[idToDelete]._id)
-            .success(function(data) {
-              console.log('Deleted: ' + videolinks[idToDelete].file);
-              videolinks = data;
-            });
+      if (video.id >= video.arrLen) {
+        video.id = 0;
       }
-    };
+
+      if (currStat === "ended" || currStat === "error") {
+        video.id++; // next video
+
+        //stopVideo(tag);
+        loadVideo(tag, video.id);
+        playVideo(tag); 
+
+        // Load video info
+        $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
+        $scope.origLinkTitle = video.arr[video.id].title;
+      }
+    }
 
     // Play next video if on the current video end
-    videoFst.addEventListener('ended', function() {
-      extScope.$apply(switchVideo(videoFst, 'ended'));
-    });
-    videoSnd.addEventListener('ended', function() {
-      extScope.$apply(switchVideo(videoSnd, 'ended'));
+    video.fstTag.addEventListener("ended", function() {
+      switchVideo(video.fstTag, "ended");
     });
 
     // Play next video if error detected
-    videoFst.addEventListener('error', function() {
-      extScope.$apply(switchVideo(videoFst, 'ended'));
-      console.log('error');
-      console.log(videoFst);
-    });
-    videoSnd.addEventListener('error', function() {
-      extScope.$apply(switchVideo(videoSnd, 'ended'));
-      console.log('error');
-      console.log(videoSnd);
+    video.fstTag.addEventListener("error", function() {
+      switchVideo(video.fstTag, "error");
     });
 
-    // Play next video if the current video is not available
-    videoFst.addEventListener('stalled', function() {
-      extScope.$apply(switchVideo(videoFst, 'ended'));
-      console.log('stalled');
-      console.log(videoFst);
-    });
-    videoSnd.addEventListener('stalled', function() {
-      extScope.$apply(switchVideo(videoSnd, 'ended'));
-      console.log('stalled');
-      console.log(videoSnd);
-    });
+    //// Play next video if stalled
+    //video.fstTag.addEventListener("stalled", function() {
+    //  switchVideo(video.fstTag, "stalled");
+    //});
 
-    videolinks = Videolinks.randomize(videolinks);
+    //// Play first video from video.arr
+    // Shuffle videos
+    video.arr = Videolinks.randomize(video.arr);
 
     // Load and play first video on the first video el
-    loadVideo(videoFst, currVideoId);
-    playVideo(videoFst);
-    
-    $scope.origLink = videolinks[currVideoId].orig_page;
-    $scope.origLinkTitle = videolinks[currVideoId].title;
+    loadVideo(video.fstTag, video.id);
+    playVideo(video.fstTag);
 
-    currVideoId++;
-    loadVideo(videoSnd, currVideoId);
-    $scope.videoSw.next = true;
+    // Load video info
+    $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
+    $scope.origLinkTitle = video.arr[video.id].title;
 
   });
 
