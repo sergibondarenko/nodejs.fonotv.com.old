@@ -1,5 +1,5 @@
 var path = require('path');
-var Videolink = require('./models/fonotvdb');
+var CoubVideo = require('./models/coubdb');
 
 var mongodb = require('mongodb');
 
@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 
 // Get links
 function getLinks(res){
-  Videolink.find(function(err, hyperlinks) {
+  CoubVideo.find(function(err, hyperlinks) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
     if (err) {
     	res.send(err);
@@ -28,7 +28,7 @@ module.exports = function(app) {
 
 	// delete a video
 	app.delete('/api/videolinks/:video_id', function(req, res) {
-		Videolink.remove({
+		CoubVideo.remove({
 			_id : mongodb.ObjectID(req.params.video_id)
 		}, function(err) {
 
@@ -45,7 +45,7 @@ module.exports = function(app) {
 	//app.post('/api/videolinks', function(req, res) {
 
 	//	// create a todo, information comes from AJAX request from Angular
-	//	Videolink.create({
+	//	CoubVideo.create({
 	//		text : req.body.text,
 	//		done : false
 	//	}, function(err, todo) {
@@ -59,7 +59,7 @@ module.exports = function(app) {
 	//});
 
 	// application -------------------------------------------------------------
-	app.get('*', function(res) {
-		res.sendFile('index.html', {root: path.join(__dirname, './public')}); // load the single view file 
+	app.get('*', function(req, res) {
+		res.sendFile('index.html', {root: path.join(__dirname, '../public')}); // load the single view file 
 	});
 };

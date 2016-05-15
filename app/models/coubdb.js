@@ -1,7 +1,4 @@
 var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/fonotvdatabase');
-
 var Schema = mongoose.Schema;
 
 var coubvideoSchema = new Schema ({
