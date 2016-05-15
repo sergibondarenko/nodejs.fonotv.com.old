@@ -3,6 +3,8 @@ var Videolink = require('./models/fonotvdb');
 
 var mongodb = require('mongodb');
 
+/*jslint unparam: true*/
+
 // Get links
 function getLinks(res){
   Videolink.find(function(err, hyperlinks) {
