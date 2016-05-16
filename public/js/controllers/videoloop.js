@@ -52,22 +52,23 @@ angular.module('videoloopController', [])
         // Load video info
         $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
         $scope.origLinkTitle = video.arr[video.id].title;
+        console.log($scope.origLinkTitle);
       }
     }
 
     // Play next video if on the current video end
     video.fstTag.addEventListener("ended", function() {
-      switchVideo(video.fstTag, "ended");
+      $scope.$apply(switchVideo(video.fstTag, "ended"));
     });
 
     // Play next video if error detected
     video.fstTag.addEventListener("error", function() {
-      switchVideo(video.fstTag, "error");
+      $scope.$apply(switchVideo(video.fstTag, "error"));
     });
 
     //// Play next video if stalled
     //video.fstTag.addEventListener("stalled", function() {
-    //  switchVideo(video.fstTag, "stalled");
+    //  $scope.$apply(switchVideo(video.fstTag, "stalled"));
     //});
 
     //// Play first video from video.arr
