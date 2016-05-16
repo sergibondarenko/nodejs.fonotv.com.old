@@ -17,10 +17,22 @@ angular.module('videoloopController', [])
       sndTag: document.getElementById("video-el-snd")
     };
   
-
+    // Increment video id before video load 
     // Load video for a video tag (el)
     function loadVideo (tag, index) {
-      tag.setAttribute("src", video.arr[index].file);
+      if (video.arr[index] === undefined || video.arr[index] === null) {
+
+        if (index > video.arrLen - 1) {
+          video.id = 0;
+        } else {
+          video.id++; // next video
+        }
+
+        tag.setAttribute("src", video.arr[video.id].file);
+      } else {
+        tag.setAttribute("src", video.arr[index].file);
+      }
+
       tag.load();
     }
 
@@ -29,15 +41,10 @@ angular.module('videoloopController', [])
       tag.play();
     }
 
-    //// Stop video for a given video tag
-    //function stopVideo (tag) {
-    //  tag.stop();
-    //}
-
     // Switch video
     function switchVideo (tag, currStat) {
 
-      if (video.id >= video.arrLen) {
+      if (video.id > video.arrLen - 1) {
         video.id = 0;
       } else {
         video.id++; // next video
@@ -48,14 +55,14 @@ angular.module('videoloopController', [])
         if (tag === video.sndTag) {
           video.sndTag.style.display = "block"; // show tag
           video.fstTag.style.display = "none"; // hide tag
+          loadVideo(video.fstTag, video.id + 1); // load with next id
         } else {
           video.sndTag.style.display = "none";
           video.fstTag.style.display = "block";
+          loadVideo(video.sndTag, video.id + 1);
         }
 
-        //stopVideo(tag);
-        loadVideo(tag, video.id);
-        playVideo(tag); 
+        playVideo(tag); // play current video 
 
         // Load video info
         $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
@@ -79,21 +86,18 @@ angular.module('videoloopController', [])
       $scope.$apply(switchVideo(video.fstTag, "error"));
     });
 
-    //// Play next video if stalled
-    //video.fstTag.addEventListener("stalled", function() {
-    //  $scope.$apply(switchVideo(video.fstTag, "stalled"));
-    //});
-
-    //// Play first video from video.arr
     // Shuffle videos
     video.arr = Videolinks.randomize(video.arr);
 
-    // Load and play first video on the first video el
+    //// Play first video from video.arr
     loadVideo(video.fstTag, video.id);
     playVideo(video.fstTag);
 
     // Load video info
     $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
     $scope.origLinkTitle = video.arr[video.id].title;
+
+    // Load next video into hidden tag
+    loadVideo(video.sndTag, video.id + 1);
   });
 }]);
