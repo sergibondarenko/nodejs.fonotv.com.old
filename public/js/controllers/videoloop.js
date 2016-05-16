@@ -20,7 +20,6 @@ angular.module('videoloopController', [])
 
     // Load video for a video tag (el)
     function loadVideo (tag, index) {
-      console.log(video);
       tag.setAttribute("src", video.arr[index].file);
       tag.load();
     }
@@ -40,10 +39,19 @@ angular.module('videoloopController', [])
 
       if (video.id >= video.arrLen) {
         video.id = 0;
+      } else {
+        video.id++; // next video
       }
 
       if (currStat === "ended" || currStat === "error") {
-        video.id++; // next video
+
+        if (tag === video.sndTag) {
+          video.sndTag.style.display = "block"; // show tag
+          video.fstTag.style.display = "none"; // hide tag
+        } else {
+          video.sndTag.style.display = "none";
+          video.fstTag.style.display = "block";
+        }
 
         //stopVideo(tag);
         loadVideo(tag, video.id);
@@ -52,17 +60,22 @@ angular.module('videoloopController', [])
         // Load video info
         $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
         $scope.origLinkTitle = video.arr[video.id].title;
-        console.log($scope.origLinkTitle);
       }
     }
 
     // Play next video if on the current video end
     video.fstTag.addEventListener("ended", function() {
+      $scope.$apply(switchVideo(video.sndTag, "ended"));
+    });
+    video.sndTag.addEventListener("ended", function() {
       $scope.$apply(switchVideo(video.fstTag, "ended"));
     });
 
     // Play next video if error detected
     video.fstTag.addEventListener("error", function() {
+      $scope.$apply(switchVideo(video.sndTag, "error"));
+    });
+    video.sndTag.addEventListener("error", function() {
       $scope.$apply(switchVideo(video.fstTag, "error"));
     });
 
@@ -82,8 +95,5 @@ angular.module('videoloopController', [])
     // Load video info
     $scope.origLink = "http://coub.com/view/" +  video.arr[video.id].permalink;
     $scope.origLinkTitle = video.arr[video.id].title;
-
   });
-
-    
 }]);
