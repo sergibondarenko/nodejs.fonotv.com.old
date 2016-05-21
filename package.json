@@ -4,17 +4,20 @@
   "description": "Continuos video streaming.",
   "main": "server.js",
   "author": "Sergey Bondarenko",
-  "dependencies": {
-    "angular": "",
-    "angular-route": "",
-    "body-parser": "",
-    "bootstrap": "",
-    "express": "",
-    "method-override": "",
-    "mongoose": "",
-    "morgan": "",
-    "videogular": "",
-    "angular-sanitize": "",
-    "jquery": ""
+  "devDependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-sanitize": "^1.5.5",
+    "angularjs": "0.0.1",
+    "body-parser": "^1.15.1",
+    "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
+    "http": "0.0.0",
+    "jquery": "^2.2.4",
+    "method-override": "^2.3.6",
+    "mongodb": "^2.1.19",
+    "mongoose": "^4.4.17",
+    "morgan": "^1.7.0",
+    "system": "^1.0.4"
   }
 }
