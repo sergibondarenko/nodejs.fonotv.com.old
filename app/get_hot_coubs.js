@@ -2,7 +2,11 @@
 
 var http = require('http');
 var mongoose = require('mongoose');
+
+var database = require('../config/database.js'); // load the database config
 var CoubVideo = require('./models/coubdb.js');
+
+mongoose.connect(database.url); 	// connect to mongoDB database on modulus.io
 
 function CoubApi (url, numPerPage, numOfPages) {
   this.url = url;
