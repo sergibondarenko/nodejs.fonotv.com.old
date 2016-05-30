@@ -6,16 +6,16 @@
   roles:
     - common
     - system
-    - mongodb
-    - nodejs
-    - node-monitor
-    - node-inspector
-    - express
-    - angular
-    - angular-route
-    - body-parser
-    - bootstrap
-    - method-override
-    - morgan
-    - mongoose
-    - yo
+    #- mongodb
+    #- nodejs
+    #- node-monitor
+    #- node-inspector
+    #- express
+    #- angular
+    #- angular-route
+    #- body-parser
+    #- bootstrap
+    #- method-override
+    #- morgan
+    #- mongoose
+    #- yo
