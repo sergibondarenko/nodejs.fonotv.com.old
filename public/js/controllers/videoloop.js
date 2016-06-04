@@ -85,10 +85,10 @@ angular.module('videoloopController', [])
       $scope.$apply(switchVideo(video.fstTag, "error"));
     });
 
-    // Shuffle videos
-    Videolinks.randomize(video.arr).then(function (data) {
-      video.arr = data;
-    });
+    //// Shuffle videos. !!! Initial shuffling is done on the backend be findRandom()
+    //Videolinks.randomize(video.arr).then(function (data) {
+    //  video.arr = data;
+    //});
 
     // Play first video from video.arr
     loadVideo(video.fstTag, video.id);

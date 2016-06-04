@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var random = require('mongoose-simple-random');
 var Schema = mongoose.Schema;
 
 var coubvideoSchema = new Schema ({
@@ -172,6 +173,8 @@ var coubvideoSchema = new Schema ({
   ahmad_promo: {},
   position_on_page: Number
 });
+
+coubvideoSchema.plugin(random);
 
 var CoubVideo = mongoose.model('CoubVideo', coubvideoSchema);
 
