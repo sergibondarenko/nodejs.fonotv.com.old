@@ -34,8 +34,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialised;
   overflow-x: hidden;
-  /*background: #000000;*/
-  background: url("http://i.giphy.com/3o85xuOopcjqT2AgzC.gif") no-repeat center center fixed;
+  background-image: url("../img/glitch.gif");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
