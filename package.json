@@ -17,6 +17,7 @@
     "method-override": "^2.3.6",
     "mongodb": "^2.1.19",
     "mongoose": "^4.4.17",
+    "mongoose-simple-random": "^0.3.3",
     "morgan": "^1.7.0",
     "node-monitor": "^0.3.11",
     "system": "^1.0.4"
