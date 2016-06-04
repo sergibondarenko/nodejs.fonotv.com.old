@@ -6,7 +6,6 @@ angular.module('videoloopController', [])
 
   // Get video files and play them   
   Videolinks.get().success(function(data) {
-    //var videolinks = data;
  
     var video = {
       next: false,
@@ -87,9 +86,11 @@ angular.module('videoloopController', [])
     });
 
     // Shuffle videos
-    video.arr = Videolinks.randomize(video.arr);
+    Videolinks.randomize(video.arr).then(function (data) {
+      video.arr = data;
+    });
 
-    //// Play first video from video.arr
+    // Play first video from video.arr
     loadVideo(video.fstTag, video.id);
     playVideo(video.fstTag);
 
