@@ -27,9 +27,9 @@ angular.module('videoloopController', [])
           video.id++; // next video
         }
 
-        tag.setAttribute("src", video.arr[video.id].file);
+        tag.setAttribute("src", video.arr[video.id].file_versions.html5.video.med.url);
       } else {
-        tag.setAttribute("src", video.arr[index].file);
+        tag.setAttribute("src", video.arr[index].file_versions.html5.video.med.url);
       }
 
       tag.load();
