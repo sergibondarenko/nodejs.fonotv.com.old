@@ -20,7 +20,6 @@ fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $
     SC.connect().then(function() {
       return SC.get("/me");
     }).then(function(me) {
-			console.log(me);
 			userPerma = me.permalink;
 			set_sc_ui(me.username, me.avatar_url);
 			get_playlists();
@@ -30,29 +29,22 @@ fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $
 	var set_sc_ui = function(username, useravatar) {
 		$scope.soundcloud.username = username;
 		$scope.soundcloud.avatar = useravatar;
-		console.log($scope.soundcloud.username);
 		$scope.$apply();
 	};
 
 	var get_playlists = function() {
-		var i;
 		SC.get("/me/playlists").then(function(response) {
-			console.log(response);
-			for(i = 0; i < response.length; i++) {
-				$scope.soundcloud.playlists[response[i].title] = response[i].permalink;
-			}
-			console.log($scope.soundcloud.playlists);
+			response.forEach(function(member) {
+				$scope.soundcloud.playlists[member.title] = member.permalink;
+			});
 			$scope.$apply();
 		});	
 	};
 
 	var play = function(uri) {
-		//var url = "http://soundcloud.com/" + userPerma + "/" + uri;
-		var url = "http://soundcloud.com/forss/flickermood"; 
-		console.log(url);
+		var url = "http://soundcloud.com/" + userPerma + "/" + uri;
 		SC.oEmbed(url, {auto_play: true, maxheight: 100}).then(function (resp) {
 			$scope.soundcloud.player = $sce.trustAsHtml(resp.html);
-			console.log($scope.soundcloud.player);
 			$scope.$apply();
 		});
 	};  
