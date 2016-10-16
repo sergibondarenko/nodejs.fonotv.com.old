@@ -47,7 +47,8 @@ fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $
 
 	var play = function(uri) {
 		var url = "http://soundcloud.com/" + userPerma + "/" + uri;
-		SC.oEmbed(url, {auto_play: true, maxheight: 100}).then(function (resp) {
+		SC.oEmbed(url, {auto_play: true, show_artwork: true, maxheight: 100}).then(function (resp) {
+			resp.html = resp.html.replace(/scrolling="no"/, 'scrolling="yes"');
 			$scope.soundcloud.player = $sce.trustAsHtml(resp.html);
 			$scope.$apply();
 		});
