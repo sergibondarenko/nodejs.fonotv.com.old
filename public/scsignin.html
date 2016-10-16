@@ -10,13 +10,6 @@
 <body>
 
 	<div class="content" ng-app="fonotvApp" ng-controller="scSigninController">
-		<!--
-		<a ng-click="connect_sc()">
-			<img src="img/btn-connect-s.png" />
-		</a>
-		<p ng-bind="soundcloud.username"></p>
-		<div class="sc-ui" ng-init="useravatar = 'img/default_avatar.png'">
-		-->
 		<div class="sc-ui">
 			<a ng-click="connect_sc()">
 				<img src="img/btn-connect-s.png" />
@@ -27,13 +20,13 @@
 			<div id="playlists">
 				<p>Playlists: </p>
 				<ul>
-					<li ng-repeat="(title, link) in soundcloud.playlists">
-						<a ng-click="play_playlist(title)">{{title}}</a>
+					<li ng-click="play_playlist(title)" ng-repeat="(title, link) in soundcloud.playlists">
+						{{title}}
 					</li>
 				</ul>
 			</div>
 
-			<div ng-bind-html="scPlayer" id="player"></div>
+			<div ng-bind-html="soundcloud.player" id="player"></div>
 		</div>
 	</div>
 

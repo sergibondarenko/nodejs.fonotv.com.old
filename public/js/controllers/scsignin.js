@@ -1,6 +1,6 @@
 /*global angular*/
 /*global document*/
-fonotvApp.controller('scSigninController', ['$scope', function($scope) {
+fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $sce) {
 
 	SC.initialize({
 		client_id: '8ebe7791917d11f0e573ef82a7bb1295',
@@ -10,7 +10,8 @@ fonotvApp.controller('scSigninController', ['$scope', function($scope) {
 	$scope.soundcloud = {
 		username: "",
 		avatar: "img/default_avatar.png",
-		playlists: {}	
+		playlists: {},
+		player: ""	
 	};
 
 	var userPerma;
@@ -46,15 +47,19 @@ fonotvApp.controller('scSigninController', ['$scope', function($scope) {
 	};
 
 	var play = function(uri) {
-		url = "http://soundcloud.com/" + userPerma + "/" + uri;
-		SC.oEmbed(url, {maxheight: 200}, function (resp) {
-			$scope.scPlayer = resp.html;
+		//var url = "http://soundcloud.com/" + userPerma + "/" + uri;
+		var url = "http://soundcloud.com/forss/flickermood"; 
+		console.log(url);
+		SC.oEmbed(url, {auto_play: true, maxheight: 100}).then(function (resp) {
+			$scope.soundcloud.player = $sce.trustAsHtml(resp.html);
+			console.log($scope.soundcloud.player);
+			$scope.$apply();
 		});
 	};  
 
-	var play_playlist = function(title) {
-		if ($scope.playlists.hasOwnProperty(title)) {
-			play("sets/" + playlists[title]);
+	$scope.play_playlist = function(title) {
+		if ($scope.soundcloud.playlists.hasOwnProperty(title)) {
+			play("sets/" + $scope.soundcloud.playlists[title]);
 		}
 	};
 

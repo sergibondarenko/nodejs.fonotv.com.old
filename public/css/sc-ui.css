@@ -8,7 +8,11 @@
 }
 
 .content .sc-ui #playlists {
-	width: 50%;
+	width: 35%;
+}
+
+.content .sc-ui #player {
+	width: 35%;
 }
 
 .content .sc-ui #playlists ul {
