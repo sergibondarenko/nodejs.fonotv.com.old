@@ -1,32 +1,6 @@
 /*global angular*/
 /*global document*/
-angular.module('videoloopController', ['ngSanitize'])
-
-.controller('videoloopController', ['$scope', 'Videolinks', function($scope, Videolinks) {
-
-	SC.initialize({
-		client_id: '8ebe7791917d11f0e573ef82a7bb1295',
-		redirect_uri: 'http://fonotv.com/callback.html'
-	});
-
-	var user_perma;
-	$scope.connect_sc = function() {
-    // initiate auth popup
-    SC.connect().then(function() {
-      return SC.get('/me');
-    }).then(function(me) {
-      //alert('Hello, ' + me.username);
-      console.log('Hello, ' + me.username);
-			console.log(me);
-			user_perma = me.permalink;
-			set_sc_ui(me.username, me.avatar_url);
-    });
-	}
-
-	var set_sc_ui = function(userName, userAvatar) {
-		$scope.userName = userName;
-		$scope.userAvatar = userAvatar;
-	}
+fonotvApp.controller('videoloopController', ['$scope', 'Videolinks', function($scope, Videolinks) {
 
   // Get video files and play them   
   Videolinks.get().success(function(data) {

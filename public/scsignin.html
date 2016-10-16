@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/sc-ui.css">
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
+</head>
+
+<body>
+
+	<div class="content" ng-app="fonotvApp" ng-controller="scSigninController">
+		<!--
+		<a ng-click="connect_sc()">
+			<img src="img/btn-connect-s.png" />
+		</a>
+		<p ng-bind="soundcloud.username"></p>
+		<div class="sc-ui" ng-init="useravatar = 'img/default_avatar.png'">
+		-->
+		<div class="sc-ui">
+			<a ng-click="connect_sc()">
+				<img src="img/btn-connect-s.png" />
+			</a>
+
+			<p ng-bind="soundcloud.username" id="userName"></p>
+			<img ng-src={{soundcloud.avatar}} id="userAvatar" />
+			<div id="playlists">
+				<p>Playlists: </p>
+				<ul>
+					<li ng-repeat="(title, link) in soundcloud.playlists">
+						<a ng-click="play_playlist(title)">{{title}}</a>
+					</li>
+				</ul>
+			</div>
+
+			<div ng-bind-html="scPlayer" id="player"></div>
+		</div>
+	</div>
+
+  <script src="js/core.js"></script>
+  <script src="js/controllers/scsignin.js"></script>
+  <script src="js/services/videolinks.js"></script>
+</body>
+</html>

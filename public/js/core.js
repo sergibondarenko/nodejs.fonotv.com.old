@@ -1,2 +1,2 @@
 /*global angular*/
-angular.module('fonotv', ['videoloopController', 'fonotvService']);
+var fonotvApp = angular.module('fonotvApp', ['fonotvService', 'ngSanitize']);
