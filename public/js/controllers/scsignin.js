@@ -10,7 +10,9 @@ fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $
 	$scope.soundcloud = {
 		username: "",
 		avatar: "img/default_avatar.png",
+		show_avatar: false,
 		playlists: {},
+		show_playlist: false,
 		player: ""	
 	};
 
@@ -29,6 +31,7 @@ fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $
 	var set_sc_ui = function(username, useravatar) {
 		$scope.soundcloud.username = username;
 		$scope.soundcloud.avatar = useravatar;
+		$scope.soundcloud.show_avatar = true;
 		$scope.$apply();
 	};
 
@@ -37,6 +40,7 @@ fonotvApp.controller('scSigninController', ['$scope', '$sce', function($scope, $
 			response.forEach(function(member) {
 				$scope.soundcloud.playlists[member.title] = member.permalink;
 			});
+			$scope.soundcloud.show_playlist = true;
 			$scope.$apply();
 		});	
 	};

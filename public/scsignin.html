@@ -15,10 +15,12 @@
 				<img src="img/btn-connect-s.png" />
 			</a>
 
-			<p ng-bind="soundcloud.username" id="userName"></p>
-			<img ng-src={{soundcloud.avatar}} id="userAvatar" />
+			<div ng-show="soundcloud.show_avatar">
+				<p ng-bind="soundcloud.username" id="userName"></p>
+				<img ng-src={{soundcloud.avatar}} id="userAvatar" />
+			</div>
 			<div id="playlists">
-				<p>Playlists: </p>
+				<p ng-show="soundcloud.show_playlist">Playlists: </p>
 				<ul>
 					<li ng-click="play_playlist(title)" ng-repeat="(title, link) in soundcloud.playlists">
 						{{title}}
