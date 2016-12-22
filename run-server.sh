@@ -1,4 +1,4 @@
 #!/bin/bash
 
-node --debug /vagrant/server.js &
+node --debug server.js &
 node-inspector

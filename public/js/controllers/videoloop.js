@@ -1,5 +1,5 @@
 /*global angular*/
-/*global document*/
+/*global document, fonotvApp*/
 fonotvApp.controller('videoloopController', ['$scope', 'Videolinks', function($scope, Videolinks) {
 
   // Get video files and play them   
@@ -10,6 +10,7 @@ fonotvApp.controller('videoloopController', ['$scope', 'Videolinks', function($s
       id: 0,
       arr: data,
       arrLen: data.length,
+      timesPlayed: 0,
       fstTag: document.getElementById("video-el-fst"),
       sndTag: document.getElementById("video-el-snd")
     };
@@ -36,6 +37,13 @@ fonotvApp.controller('videoloopController', ['$scope', 'Videolinks', function($s
     // Play video for a given video tag
     function playVideo (tag) {
       tag.play();
+      video.timesPlayed++;
+      if (video.timesPlayed === 101) {
+        Videolinks.get().success(function(data) {
+          video.arr = data;
+          video.timesPlayed = 0;
+        });
+      }
     }
 
     // Switch video

@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 
 // Get links
 function getLinks(res){
-  CoubVideo.findRandom({}, {}, {limit: 200}, function(err, hyperlinks) {
+  CoubVideo.findRandom({}, {}, {limit: 100}, function(err, hyperlinks) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
     if (err) {
     	res.send(err);
